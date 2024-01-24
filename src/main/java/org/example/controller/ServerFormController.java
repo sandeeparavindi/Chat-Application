@@ -36,7 +36,8 @@ public class ServerFormController {
     private Server server;
     private static VBox staticVBox;
 
-    public VBox vBox;
+    @FXML
+    private VBox vBox;
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
