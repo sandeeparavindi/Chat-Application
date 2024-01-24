@@ -35,7 +35,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <JFXTextArea fx:id="txtNAme" focusColor="#4972b0" layoutX="190.0" layoutY="107.0" prefHeight="35.0" prefWidth="354.0" unFocusColor="#4972b0">
+      <JFXTextArea fx:id="txtName" focusColor="#4972b0" layoutX="190.0" layoutY="107.0" prefHeight="35.0" prefWidth="354.0" unFocusColor="#4972b0">
          <font>
             <Font size="16.0" />
          </font>

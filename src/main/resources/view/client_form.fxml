@@ -19,7 +19,7 @@
       </ImageView>
       <ScrollPane fx:id="scrollPane" layoutX="33.0" layoutY="95.0" prefHeight="331.0" prefWidth="435.0" style="-fx-background-color: #a2bd30;">
          <content>
-            <VBox fx:id="vBox" prefHeight="330.0" prefWidth="426.0" />
+            <VBox prefHeight="330.0" prefWidth="426.0" />
          </content>
       </ScrollPane>
       <Button layoutX="33.0" layoutY="451.0" mnemonicParsing="false" onAction="#btnAttachmentOnAction" prefHeight="44.0" prefWidth="50.0" style="-fx-background-color: transparent;">
