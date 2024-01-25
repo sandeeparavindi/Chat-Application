@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 import org.example.server.Server;
 
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class ServerFormController {
@@ -31,13 +33,34 @@ public class ServerFormController {
     @FXML
     private ScrollPane scrollPane;
 
-    public ScrollPane scrollPain;
-
     private Server server;
     private static VBox staticVBox;
 
     @FXML
     private VBox vBox;
+
+    public void initialize(){
+        staticVBox = vBox;
+        receiveMessage("Sever Starting..");
+        vBox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                scrollPane.setVvalue((Double) newValue);
+            }
+        });
+
+        new Thread(() -> {
+            try {
+                server = Server.getInstance();
+                server.makeSocket();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        receiveMessage("Sever Running..");
+        receiveMessage("Waiting for User..");
+    }
 
     @FXML
     void btnAddOnAction(ActionEvent event) {

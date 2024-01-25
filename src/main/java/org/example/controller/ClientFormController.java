@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.example.emoji.EmojiPicker;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,8 +27,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
-import static org.example.controller.ServerFormController.receiveMessage;
 
 public class ClientFormController {
 
@@ -50,11 +49,76 @@ public class ClientFormController {
     private VBox vBox;
 
     private Socket socket;
+
     private DataInputStream dataInputStream;
+
     private DataOutputStream dataOutputStream;
-    public ScrollPane scrollPain;
 
     private String clientName = "Client";
+
+    public void initialize(){
+        txtLabel.setText(clientName);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    socket = new Socket("localhost", 3003);
+                    dataInputStream = new DataInputStream(socket.getInputStream());
+                    dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                    System.out.println("Client connected");
+                    ServerFormController.receiveMessage(clientName+" joined.");
+
+                    while (socket.isConnected()){
+                        String receivingMsg = dataInputStream.readUTF();
+                        receiveMessage(receivingMsg, ClientFormController.this.vBox);
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        this.vBox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+                scrollPane.setVvalue((Double) newValue);
+            }
+        });
+
+        emoji();
+
+    }
+
+    private void emoji() {
+        EmojiPicker emojiPicker = new EmojiPicker();
+
+        VBox vBox = new VBox(emojiPicker);
+        vBox.setPrefSize(150,300);
+        vBox.setLayoutX(400);
+        vBox.setLayoutY(175);
+        vBox.setStyle("-fx-font-size: 30");
+
+        pane.getChildren().add(vBox);
+
+        emojiPicker.setVisible(false);
+
+        emojiButton.setOnAction(event -> {
+            if (emojiPicker.isVisible()){
+                emojiPicker.setVisible(false);
+            }else {
+                emojiPicker.setVisible(true);
+            }
+        });
+
+        emojiPicker.getEmojiListView().setOnMouseClicked(event -> {
+            String selectedEmoji = emojiPicker.getEmojiListView().getSelectionModel().getSelectedItem();
+            if (selectedEmoji != null) {
+                txtMsg.setText(txtMsg.getText()+selectedEmoji);
+            }
+            emojiPicker.setVisible(false);
+        });
+    }
 
     @FXML
     void btnAttachmentOnAction(ActionEvent event) {
@@ -88,7 +152,8 @@ public class ClientFormController {
                 text.setStyle("-fx-font-size: 14");
                 TextFlow textFlow = new TextFlow(text);
 
-                textFlow.setStyle("-fx-background-color: #0693e3; -fx-font-weight: bold; -fx-color: white; -fx-background-radius: 20px");
+                textFlow.setStyle("-fx-background-color: #0693e3; -fx-font-weight: bold; -fx-color: white; " +
+                        "-fx-background-radius: 20px");
                 textFlow.setPadding(new Insets(5, 10, 5, 10));
                 text.setFill(Color.color(1, 1, 1));
 
@@ -116,6 +181,62 @@ public class ClientFormController {
 
                 txtMsg.clear();
             }
+        }
+    }
+
+    public static void receiveMessage(String msg, VBox vBox) throws IOException {
+        if (msg.matches(".*\\.(png|jpe?g|gif)$")){
+            HBox hBoxName = new HBox();
+            hBoxName.setAlignment(Pos.CENTER_LEFT);
+            Text textName = new Text(msg.split("[-]")[0]);
+            TextFlow textFlowName = new TextFlow(textName);
+            hBoxName.getChildren().add(textFlowName);
+
+            Image image = new Image(msg.split("[-]")[1]);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(200);
+            imageView.setFitWidth(200);
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_LEFT);
+            hBox.setPadding(new Insets(5,5,5,10));
+            hBox.getChildren().add(imageView);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    vBox.getChildren().add(hBoxName);
+                    vBox.getChildren().add(hBox);
+                }
+            });
+
+        }else {
+            String name = msg.split("-")[0];
+            String msgFromServer = msg.split("-")[1];
+
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_LEFT);
+            hBox.setPadding(new Insets(5,5,5,10));
+
+            HBox hBoxName = new HBox();
+            hBoxName.setAlignment(Pos.CENTER_LEFT);
+            Text textName = new Text(name);
+            TextFlow textFlowName = new TextFlow(textName);
+            hBoxName.getChildren().add(textFlowName);
+
+            Text text = new Text(msgFromServer);
+            TextFlow textFlow = new TextFlow(text);
+            textFlow.setStyle("-fx-background-color: #abb8c3; -fx-font-weight: bold; -fx-background-radius: 20px");
+            textFlow.setPadding(new Insets(5,10,5,10));
+            text.setFill(Color.color(0,0,0));
+
+            hBox.getChildren().add(textFlow);
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    vBox.getChildren().add(hBoxName);
+                    vBox.getChildren().add(hBox);
+                }
+            });
         }
     }
 

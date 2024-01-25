@@ -25,6 +25,7 @@ public class LoginFormController {
 
             ClientFormController controller = new ClientFormController();
             controller.setClientName(txtName.getText());
+            fxmlLoader.setController(controller);
 
             primaryStage.setScene(new Scene(fxmlLoader.load()));
             primaryStage.setTitle(txtName.getText());
@@ -40,5 +41,4 @@ public class LoginFormController {
             new Alert(Alert.AlertType.ERROR, "Please enter your name").show();
         }
     }
-
 }
