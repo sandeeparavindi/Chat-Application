@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="430.0" prefWidth="363.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.RegisterFormController">
+   <children>
+      <Label layoutX="104.0" layoutY="50.0" text="User Registration" textFill="#4972b0">
+         <font>
+            <Font name="Times New Roman Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUserName" layoutX="41.0" layoutY="123.0" prefHeight="35.0" prefWidth="276.0" />
+      <Label layoutX="41.0" layoutY="99.0" text="Input your name*" textFill="#a2bd30">
+         <font>
+            <Font name="Times New Roman Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmail" layoutX="41.0" layoutY="204.0" prefHeight="35.0" prefWidth="276.0" />
+      <Label layoutX="41.0" layoutY="181.0" text="email*" textFill="#a2bd30">
+         <font>
+            <Font name="Times New Roman Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="264.0" text="password*" textFill="#a2bd30">
+         <font>
+            <Font name="Times New Roman Bold" size="16.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtPw" layoutX="41.0" layoutY="292.0" prefHeight="35.0" prefWidth="276.0" />
+      <Label layoutX="54.0" layoutY="392.0" text="Already have an account?" textFill="#4972b0" />
+      <Hyperlink layoutX="227.0" layoutY="389.0" onAction="#hyperLoginHereOnAction" text="Login here" />
+      <JFXButton layoutX="43.0" layoutY="345.0" onAction="#btnRegisterOnAction" prefHeight="35.0" prefWidth="276.0" style="-fx-background-color: #4972b0;" text="create account" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="120.0" fitWidth="123.0" layoutX="-6.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/logo2.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
