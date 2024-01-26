@@ -86,7 +86,7 @@ public class ServerFormController {
 
         Text text = new Text(msgFromClient);
         TextFlow textFlow = new TextFlow(text);
-        textFlow.setStyle("-fx-background-color: #abb8c3; -fx-font-weight: bold; -fx-background-radius: 20px");
+        textFlow.setStyle("-fx-background-color: #8FADFF ; -fx-font-weight: bold; -fx-background-radius: 20px");
         textFlow.setPadding(new Insets(5,10,5,10));
         text.setFill(Color.color(0,0,0));
 

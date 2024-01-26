@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import com.jfoenix.controls.JFXTextArea;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.example.emoji.EmojiPicker;
 
+import java.awt.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -122,7 +122,34 @@ public class ClientFormController {
 
     @FXML
     void btnAttachmentOnAction(ActionEvent event) {
+        FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+        dialog.setMode(FileDialog.LOAD);
+        dialog.setVisible(true);
+        String file = dialog.getDirectory()+dialog.getFile();
+        dialog.dispose();
+        sendImage(file);
+        System.out.println(file + " chosen.");
+    }
 
+    private void sendImage(String msgToSend) {
+        Image image = new Image("file:" + msgToSend);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
+
+        HBox hBox = new HBox();
+        hBox.setPadding(new Insets(5, 5, 5, 10));
+        hBox.getChildren().add(imageView);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+
+        vBox.getChildren().add(hBox);
+
+        try {
+            dataOutputStream.writeUTF(clientName + "-" + msgToSend);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -152,7 +179,7 @@ public class ClientFormController {
                 text.setStyle("-fx-font-size: 14");
                 TextFlow textFlow = new TextFlow(text);
 
-                textFlow.setStyle("-fx-background-color: #0693e3; -fx-font-weight: bold; -fx-color: white; " +
+                textFlow.setStyle("-fx-background-color: #52C659; -fx-font-weight: bold; -fx-color: white; " +
                         "-fx-background-radius: 20px");
                 textFlow.setPadding(new Insets(5, 10, 5, 10));
                 text.setFill(Color.color(1, 1, 1));
@@ -192,20 +219,17 @@ public class ClientFormController {
             TextFlow textFlowName = new TextFlow(textName);
             hBoxName.getChildren().add(textFlowName);
 
-            Image image = new Image(msg.split("[-]")[1]);
+            Image image = new Image("file:" + msg.split("[-]")[1]);
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(200);
             imageView.setFitWidth(200);
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.setPadding(new Insets(5,5,5,10));
+            hBox.setPadding(new Insets(5, 5, 5, 10));
             hBox.getChildren().add(imageView);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    vBox.getChildren().add(hBoxName);
-                    vBox.getChildren().add(hBox);
-                }
+            Platform.runLater(() -> {
+                vBox.getChildren().add(hBoxName);
+                vBox.getChildren().add(hBox);
             });
 
         }else {
@@ -224,7 +248,7 @@ public class ClientFormController {
 
             Text text = new Text(msgFromServer);
             TextFlow textFlow = new TextFlow(text);
-            textFlow.setStyle("-fx-background-color: #abb8c3; -fx-font-weight: bold; -fx-background-radius: 20px");
+            textFlow.setStyle("-fx-background-color: #FFF81E ; -fx-font-weight: bold; -fx-background-radius: 20px");
             textFlow.setPadding(new Insets(5,10,5,10));
             text.setFill(Color.color(0,0,0));
 
