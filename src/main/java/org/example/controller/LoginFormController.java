@@ -24,8 +24,8 @@ public class LoginFormController {
     @FXML
     private JFXTextArea txtPassword;
 
-    private final String adminUserName = "sa";
-    private final String adminPassword = "s1022";
+    private final String adminUserName = "Sa";
+    private final String adminPassword = "1022";
 
     private String enteredUserName;
     private String enteredPassword;
@@ -33,7 +33,7 @@ public class LoginFormController {
     public void initialize(){
     }
 
-    @FXML
+   @FXML
     void btnLoginOnAction(ActionEvent event) throws IOException {
         enteredUserName = txtName.getText();
         enteredPassword = txtPassword.getText();
@@ -89,8 +89,11 @@ public class LoginFormController {
             primaryStage.show();
 
             txtName.clear();
+            txtPassword.clear();
+
         } else {
             new Alert(Alert.AlertType.ERROR, "Please enter your name").show();
         }
     }
+
 }
