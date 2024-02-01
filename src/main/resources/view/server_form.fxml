@@ -21,7 +21,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <JFXButton buttonType="RAISED" layoutX="386.0" layoutY="42.0" onAction="#btnAddOnAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #D8DBF5;" text="ADD" textFill="#4972b0">
+      <JFXButton buttonType="RAISED" layoutX="386.0" layoutY="42.0" onAction="#btnAddOnAction" prefHeight="37.0" prefWidth="80.0" text="ADD" textFill="#4972b0">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
@@ -33,3 +33,4 @@
       </ScrollPane>
    </children>
 </AnchorPane>
+

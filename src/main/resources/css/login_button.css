@@ -1,0 +1,11 @@
+/* login_button.css */
+
+/* Style for the default state */
+.button {
+    -fx-background-color:  #D8DBF5;
+}
+
+/* Style for the hover state */
+.button:hover {
+    -fx-background-color: #C0F0E5;
+}

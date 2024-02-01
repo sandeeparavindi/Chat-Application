@@ -1,0 +1,7 @@
+#pane .button:hover {
+    -fx-background-color: #C0F0E5; /* Change this to the desired hover color */
+}
+
+#pane .button {
+    -fx-background-color: #D8DBF5;
+}
